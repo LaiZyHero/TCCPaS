@@ -4,7 +4,7 @@ using namespace std;
 
 void BubbleSort(int *arr, int size, int *P, int *S) {
 	for (int i = 0; i < size - 1; ++i) {
-		for (int j = 0; j < size - 1; ++j) {
+		for (int j = 0; j < size - i - 1; ++j) {
 			if (arr[j] > arr[j + 1]) {
 				int temp = arr[j];
 				arr[j] = arr[j + 1];
@@ -32,8 +32,10 @@ void SelectSort(int* arr, int size, int *P, int *S) {
 	}
 }
 
-void MergeSort() {
-
+void MergeSort(int* arr, int size, int *P, int *S)
+{
+	int mid = size / 2;
+	
 }
 
 void PrintArr(int* arr, int size, int P, int S, int sum) {
