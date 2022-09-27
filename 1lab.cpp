@@ -17,25 +17,64 @@ void BubbleSort(int *arr, int size, int *P, int *S) {
 }
 
 void SelectSort(int* arr, int size, int *P, int *S) {
+    
 	int min;
-	for (int i = 0; i < size - 1; ++i) {
-		min = i;
-		for (int j = 0; j < size - 1; ++j) {
-			*S += 1;
-			if (arr[j] < arr[min])
-				min = j;
-		}
-		int temp = arr[i];
-		arr[i] = arr[min];
-		arr[min] = temp;
-		*P += 3;
-	}
+
+    for (int i = 0; i < size - 1; i++)
+    {
+        min = i;
+        for (int j = i + 1; j < size; j++){
+            if (arr[j] < arr[min])
+                min = j;
+            *S+=1;
+        }
+        if(min != i){
+            swap(arr[min], arr[i]);
+            *P+=3;
+        }
+    }
 }
 
-void MergeSort(int* arr, int size, int *P, int *S)
+void MergeSort(int *a, int n, int *P, int *S)
 {
-	int mid = size / 2;
-	
+  int step = 1;  
+  int *temp = new int[n]; 
+  while (step < n)  
+  {
+    int index = 0;    
+    int l = 0;     
+    int m = l + step;  
+    int r = l + step * 2;  
+    do
+    {
+      m = m < n ? m : n;  
+      r = r < n ? r : n;
+      int i1 = l, i2 = m; 
+      for (; i1 < m && i2 < r; ) 
+      {
+        if (a[i1] < a[i2]) { temp[index++] = a[i1++]; } 
+        else { temp[index++] = a[i2++]; }
+        *S += 1;
+      }
+      
+      while (i1 < m) {
+		temp[index++] = a[i1++]; 
+		*P += 1;
+	}
+      while (i2 < r) {
+	   temp[index++] = a[i2++]; 
+	   *P += 1;
+	}
+      l += step * 2; 
+      m += step * 2;
+      r += step * 2;
+    } while (l < n); 
+    for (int i = 0; i < n; i++) {
+      a[i] = temp[i];
+      *P += 1;
+  }
+    step *= 2; 
+  }
 }
 
 void PrintArr(int* arr, int size, int P, int S, int sum) {
@@ -59,7 +98,7 @@ int main()
 		cin >> arr[i];
 	}
 
-	BubbleSort(arr, size, &S, &P);
+	MergeSort(arr, size, &S, &P);
 	sum = S + P;
 	PrintArr(arr, size, S, P, sum);
 
